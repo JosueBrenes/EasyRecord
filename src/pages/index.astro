@@ -1,46 +1,48 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-
-import AboutMe from "@/components/AboutMe.astro";
 import Badge from "@/components/Badge.astro";
 import Briefcase from "@/components/icons/Briefcase.astro";
-import CodeIcon from "@/components/icons/Code.astro";
 import Experience from "@/components/Experience.astro";
 import GitHubIcon from "@/components/icons/GitHub.astro";
 import LinkedInIcon from "@/components/icons/LinkedIn.astro";
 import MailIcon from "@/components/icons/Mail.astro";
-import ProfileCheck from "@/components/icons/ProfileCheck.astro";
-import Projects from "@/components/Projects.astro";
 import SectionContainer from "@/components/SectionContainer.astro";
 import SocialPill from "@/components/SocialPill.astro";
+import Donations from "@/components/Donations.astro";
+import Paypal from "@/components/icons/Paypal.astro";
 ---
 
-<Layout title="Portfolio" description="">
+<Layout title="EasyRecord" description="">
   <main class="px-4">
     <SectionContainer class="py-44 pb-32">
       <h1
         class="text-gray-900 dark:text-white text-3xl md:text-4xl lg:text-5xl font-bold flex flex-row gap-x-4 pb-6 lg:pb-10"
       >
-        I'm Josué Brenes <a
-          href="https://www.linkedin.com/in/josue-brenes/"
+        EasyRecord<a
+          id="startButton"
           target="_blank"
           rel="noopener"
           class="flex justify-center items-center hover:scale-105 transition"
         >
-          <Badge>Available to work</Badge>
+          <Badge>START</Badge>
         </a>
       </h1>
       <h2
         class="text-xl lg:text-2xl text-balance max-w-[700px] text-black dark:text-white"
       >
-        <span>Your experience.</span><span
+        <span>Free Screen</span><span
           class="text-yellow-800 dark:text-yellow-200"
         >
-          Your job</span
+          Recording Anytime,</span
         >
-        .<span class="text-red-800 dark:text-red-200"> Your residence</span>.
-        <span class="text-sky-800 dark:text-sky-200">
-          Your specializations</span
+        <span class="text-sky-800 dark:text-red-200"> Anywhere</span>.
+      </h2>
+
+      <h2
+        class="text-xl lg:text-xl text-balance max-w-[300px] text-black dark:text-white"
+      >
+        <span class="text-sky-800 dark:text-sky-400">
+          Press start to record</span
         >
       </h2>
 
@@ -65,29 +67,59 @@ import SocialPill from "@/components/SocialPill.astro";
         class="text-3xl font-semibold mb-6 flex gap-x-3 items-center text-black/80 dark:text-white/80"
       >
         <Briefcase class="size-7" />
-        Work experience
+        About the website
       </h2>
       <Experience />
     </SectionContainer>
 
-    <SectionContainer id="proyectos">
+    <SectionContainer id="donations">
       <h2
         class="text-3xl font-semibold mb-6 flex gap-x-3 items-center text-black/80 dark:text-white/80"
       >
-        <CodeIcon class="size-7" />
-        Projects
+        <Paypal class="size-7" />
+        Donations
       </h2>
-      <Projects />
-    </SectionContainer>
-
-    <SectionContainer id="sobre-mi">
-      <h2
-        class="text-3xl font-semibold mb-6 flex gap-x-3 items-center text-black/80 dark:text-white/80"
-      >
-        <ProfileCheck class="size-7" />
-        About me
-      </h2>
-      <AboutMe />
+      <Donations />
     </SectionContainer>
   </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const startButton = document.getElementById("startButton");
+
+      if (startButton) {
+        startButton.addEventListener("click", async () => {
+          try {
+            // Tu código JavaScript aquí
+            const media = await navigator.mediaDevices.getDisplayMedia({
+              video: {
+                frameRate: { ideal: 30 },
+              },
+              audio: true,
+            });
+
+            const mediarecorder = new MediaRecorder(media, {
+              mimeType: "video/webm;codecs=vp8,opus",
+            });
+
+            mediarecorder.start();
+
+            const [video] = media.getVideoTracks();
+            video.addEventListener("ended", () => {
+              mediarecorder.stop();
+            });
+
+            mediarecorder.addEventListener("dataavailable", (e) => {
+              const link = document.createElement("a");
+              link.href = URL.createObjectURL(e.data);
+              link.download = "captura.webm";
+              link.click();
+            });
+          } catch (error) {
+            console.error("Error al acceder a la captura de medios:", error);
+          }
+        });
+      }
+    });
+  </script>
 </Layout>

@@ -1,0 +1,22 @@
+---
+import DonationsItem from "./DonationsItem.astro";
+const DONATIONS = [
+  {
+    date: "Josué Brenes",
+    title: "Support Our Project",
+    description:
+      "If you are interested in providing further support to this project, you have the opportunity to make donations. Your generosity will significantly contribute to the ongoing growth and development of this initiative. We appreciate any contribution you can offer to strengthen and enhance our project further. Thank you for considering supporting us!",
+    link: "#",
+  },
+];
+---
+
+<ol class="relative border-s border-gray-200 ml-3">
+  {
+    DONATIONS.map((donations) => (
+      <li class="mb-10 ms-4">
+        <DonationsItem {...donations} />
+      </li>
+    ))
+  }
+</ol>
