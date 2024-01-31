@@ -1,3 +1,3 @@
-# Portfolio for programmers and developers
-<img width="767" alt="image" src="https://github.com/JosueBrenes/portfolio.dev/assets/123853174/044054cc-3165-4a7b-ab30-9a9022c262c4">
+# EasyRecord
+<img width="791" alt="image" src="https://github.com/JosueBrenes/EasyRecord/assets/123853174/6d64e4fc-e901-4d59-97d9-ffec89500062">
 
